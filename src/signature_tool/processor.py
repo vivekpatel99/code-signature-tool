@@ -1,3 +1,11 @@
+# ================================================================================
+# Author: Vivek Patel
+# Title: AI Engineer | Computer Vision Specialist
+# Website: https://vivekapatel.com
+# Email: contact@vivekapatel.com
+# Upwork: https://www.upwork.com/freelancers/vivekpatel99?mp_source=share
+# Created: 2025-11-21
+# ================================================================================
 """
 File processor for adding signatures to code files.
 
@@ -5,6 +13,7 @@ Handles reading files, detecting existing signatures, and adding new ones.
 """
 
 import os
+import fnmatch
 from pathlib import Path
 from typing import Optional, List, Set
 
@@ -41,6 +50,33 @@ class FileProcessor:
         self.dry_run = dry_run
         self.force = force
         self.email = config['email']
+        # Get ignore patterns from config (default to empty list)
+        self.ignore_patterns = config.get('ignore', [])
+
+    def should_ignore(self, file_path: Path) -> bool:
+        """
+        Check if file matches any ignore pattern.
+
+        Args:
+            file_path: Path to file
+
+        Returns:
+            True if file should be ignored
+        """
+        file_str = str(file_path)
+        filename = file_path.name
+
+        for pattern in self.ignore_patterns:
+            # Check against full path
+            if fnmatch.fnmatch(file_str, pattern):
+                return True
+            # Check against filename
+            if fnmatch.fnmatch(filename, pattern):
+                return True
+            # Check if pattern matches any part of the path
+            if pattern in file_str:
+                return True
+        return False
 
     def has_signature(self, content: str) -> bool:
         """
@@ -65,6 +101,10 @@ class FileProcessor:
         Returns:
             True if file was modified (or would be modified in dry-run mode)
         """
+        # Check if file should be ignored
+        if self.should_ignore(file_path):
+            return False
+
         # Check if file extension is supported
         if not is_supported_file(file_path.suffix):
             return False

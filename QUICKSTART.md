@@ -1,3 +1,13 @@
+<!--
+================================================================================
+Author: Vivek Patel
+Title: AI Engineer | Computer Vision Specialist
+Website: https://vivekapatel.com
+Email: contact@vivekapatel.com
+Upwork: https://www.upwork.com/freelancers/vivekpatel99?mp_source=share
+Created: 2025-11-21
+================================================================================
+-->
 # Quick Start Guide for LLM Assistants
 
 This guide is specifically for LLM assistants to help users set up the Code Signature Tool.
