@@ -1,0 +1,20 @@
+{
+  "File Signature": {
+    "prefix": "sig",
+    "body": [
+      "<!--",
+      "==============================================================================",
+      "Author: Vivek Patel",
+      "Title: AI Engineer | Computer Vision Specialist",
+      "Website: https://vivekapatel.com",
+      "Email: contact@vivekapatel.com",
+      "Upwork: https://www.upwork.com/freelancers/vivekpatel99?mp_source=share",
+      "Created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "==============================================================================",
+      "-->",
+      "",
+      "$0"
+    ],
+    "description": "Insert file signature header"
+  }
+}

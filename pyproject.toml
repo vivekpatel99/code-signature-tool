@@ -1,0 +1,45 @@
+[project]
+name = "signature-tool"
+version = "1.0.0"
+description = "Automatically add professional signatures to code files"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "Vivek Patel", email = "contact@vivekapatel.com" }
+]
+license = { text = "MIT" }
+keywords = ["code", "signature", "attribution", "freelance", "git-hook"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Version Control :: Git",
+]
+
+[project.urls]
+Homepage = "https://github.com/vivekpatel99/code-signature-tool"
+Repository = "https://github.com/vivekpatel99/code-signature-tool"
+Issues = "https://github.com/vivekpatel99/code-signature-tool/issues"
+
+[project.scripts]
+add-signatures = "signature_tool.cli:main"
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["signature_tool"]
+package-dir = {"" = "src"}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
