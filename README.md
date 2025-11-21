@@ -147,6 +147,97 @@ In any supported file:
 2. Press Tab
 3. Signature inserted at cursor
 
+## Adding Signatures to Existing Projects
+
+### Single Project
+
+Navigate to your project and run:
+
+```bash
+cd /path/to/your/project
+
+# Preview what will change
+~/bin/add-signatures --dry-run
+
+# Add signatures to all files
+~/bin/add-signatures
+```
+
+### Multiple Projects in One Directory
+
+Update all projects in a parent directory:
+
+```bash
+cd ~/projects
+
+# Preview changes for all projects
+for dir in */; do
+    echo "=== $dir ==="
+    cd "$dir"
+    ~/bin/add-signatures --dry-run | grep "Processed:"
+    cd ..
+done
+
+# Apply signatures to all projects
+for dir in */; do
+    echo "Processing $dir..."
+    cd "$dir"
+    ~/bin/add-signatures
+    cd ..
+done
+```
+
+### Specific Project Path (Copy-Paste Ready)
+
+Replace `/path/to/project` with your actual path:
+
+```bash
+# Single project
+cd /path/to/project && ~/bin/add-signatures
+
+# Preview first
+cd /path/to/project && ~/bin/add-signatures --dry-run
+```
+
+**Example paths:**
+```bash
+# Example 1: Upwork project
+cd ~/freelance/01_active/upwork/ProjectName/03_development && ~/bin/add-signatures
+
+# Example 2: Portfolio project
+cd ~/freelance/portfolio/my-project && ~/bin/add-signatures
+
+# Example 3: Client project
+cd ~/projects/client-name/project-folder && ~/bin/add-signatures
+```
+
+### Update and Commit
+
+Add signatures and commit them:
+
+```bash
+cd /path/to/project
+~/bin/add-signatures
+git add -u  # Add only modified files
+git commit -m "Add professional signatures to code files"
+```
+
+### What Gets Processed
+
+The tool automatically **processes:**
+- ✅ Python files (`.py`)
+- ✅ JavaScript/TypeScript (`.js`, `.ts`, `.jsx`, `.tsx`)
+- ✅ Markdown documentation (`.md`)
+- ✅ Other code files (see Supported File Types below)
+
+The tool automatically **skips:**
+- ✅ `.venv/`, `node_modules/`, `__pycache__/` (dependencies)
+- ✅ `.git/`, `.idea/`, `.vscode/` (IDE/VCS folders)
+- ✅ `.claude/` directory (Claude Code config)
+- ✅ Hidden files (`.env`, `.gitignore`, etc.)
+- ✅ Lock files (`package-lock.json`, `poetry.lock`, etc.)
+- ✅ Files in your ignore list (see Configuration below)
+
 ## Configuration
 
 ### Global Config
@@ -174,6 +265,46 @@ In any supported file:
 ```
 
 Local config merges with global - only override fields you need to change.
+
+### Ignore List (Optional)
+
+Add an `"ignore"` field to exclude specific files or patterns:
+
+```json
+{
+  "author": "Your Name",
+  "email": "your@email.com",
+  "ignore": [
+    "CLAUDE.md",
+    "**/CLAUDE.md",
+    ".claude/*",
+    ".claude/**",
+    ".*",
+    "package-lock.json",
+    "requirements.txt",
+    "LICENSE",
+    "CHANGELOG*"
+  ]
+}
+```
+
+**Common ignore patterns:**
+
+| Pattern | What It Ignores |
+|---------|----------------|
+| `"CLAUDE.md"` | File named CLAUDE.md |
+| `"**/CLAUDE.md"` | CLAUDE.md in any directory |
+| `".*"` | Hidden files (`.env`, `.gitignore`) |
+| `".claude/**"` | Entire .claude directory |
+| `"*.log"` | All log files |
+| `"test_*.py"` | Test files starting with test_ |
+| `"**/node_modules/**"` | Node modules (already skipped by default) |
+
+**Already skipped by default:**
+- `.venv/`, `node_modules/`, `__pycache__/`
+- `.git/`, `.idea/`, `.vscode/`
+- `.gitignore`, `LICENSE`, `requirements.txt`
+- `package-lock.json`, `yarn.lock`, `poetry.lock`
 
 ## Supported File Types
 
